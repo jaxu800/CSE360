@@ -1,9 +1,10 @@
 /* Author: Jason Xu
  * Class ID: 166
- * Assignment #: 1
+ * Assignment #: 2
  * Description: This file contains methods for manipulating an array.
  * It contains a constructor to create a new object of type SimpleList
  * It also contains an add function, a remove function, a search function, and a toString function.
+ * It also contains an append function, a first element function, a last element function, and an array size function. 
  */
 
 package cse360assign2;
