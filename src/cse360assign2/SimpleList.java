@@ -135,7 +135,64 @@ public class SimpleList {
 		else {
 			return -1;
 		}
-		
+	}
+	
+	/* Append Method
+	 * Parameter of type int, includes element wanted to be appended to list.
+	 * Void method, no return type.
+	 * This method takes the element from the parameter and appends it to the end of the list.
+	 * If the list is full, the size of the array is increased by 50%.
+	 */
+	public void append(int num) {
+		if(count == list.length) { //if the list is full
+			int[] previousList = new int[list.length];
+			previousList = list.clone();
+			list = new int[(int) (count * 1.5)]; //declare new list that is 50% larger in size than the old list
+			for(int tracker = 0; tracker < count; tracker++) {
+				list[tracker] = previousList[tracker];
+			}	
+		}
+		list[count] = num; //append element to the end of the list
+		count++; //increment count
+	}
+	
+	/* First method
+	 * No parameter
+	 * Return type int, returns the first element of the list.
+	 * If the list is empty, returns -1.
+	 * This method just returns the first element of the list or -1 if the list is empty. 
+	 */
+	public int first() {
+		if(count == 0) { //if the list is empty return -1
+			return -1;
+		}
+		else {
+			return list[0]; //return first element in the list
+		}
+	}
+	
+	/* Last method
+	 * No parameter
+	 * Return type int, returns the last element of the list.
+	 * If the list is empty, returns -1.
+	 * This method just returns the last element of the list or -1 if the list is empty.
+	 */
+	public int last() {
+		if(count == 0) { //if the list is empty return -1
+			return -1;
+		}
+		else {
+			return list[count - 1]; //return last element of the list
+		}
+	}
+	
+	/* Size method
+	 * No parameter
+	 * Return type int, returns the current number of possible locations in the list.
+	 * This method just returns the current total size of the array, including empty spaces. 
+	 */
+	public int size() {
+		return list.length; //returns total size of the array
 	}
 	
 }
