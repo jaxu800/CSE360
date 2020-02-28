@@ -28,21 +28,25 @@ public class SimpleList {
 	 * Parameter of type int, includes element wanted to be added to array.
 	 * Void method, no return type.
 	 * This method adds the element from the parameter into the first index of the array and moves 
-	 * the following elements up. 
+	 * the following elements up. If the list is initially full, it increases the size of the array
+	 * by 50%.
 	 */
 	public void add(int num) {
+		if(count == list.length) { //if the list is full
+			int[] previousList = new int[list.length];
+			previousList = list.clone();
+			list = new int[(int) (count * 1.5)]; //declare new list that is 50% larger in size than the old list
+			for(int tracker = 0; tracker < count; tracker++) {
+				list[tracker] = previousList[tracker];
+			}	
+		}
 		int[] temp = new int[list.length];
 		temp = list.clone();
-		if(count == 10) {
-			count--;
-		}
 		for(int increment = 0; increment < count; increment++) {
 			list[increment+1] = temp[increment];
 		}
 		list[0] = num;
-		if(count < 10) {
-			count++; //increase count once element is added
-		}
+		count++; //increment the count
 	}
 	
 	/* Remove method
@@ -51,11 +55,13 @@ public class SimpleList {
 	 * This method searches the array and removes the first instance of the element from the parameter.
 	 * Once the element is removed, it moves every subsequent element down one index.
 	 * If no element is found, nothing happens. 
+	 * If the list has 25% or more empty places, then the size of the list is decreased until it no longer has 25% or
+	 * more empty spaces, but the list cannot be reduced to less than 1 entry. 
 	 */
 	public void remove(int num) {
 		int increment = 0;
 		boolean found = false; //set boolean variable so method stops after first instance
-		while(increment < list.length && found == false) {
+		while(increment < list.length && found == false && count > 1) {
 			if(list[increment] == num) {
 				int[] temp = new int[list.length];
 				temp = list.clone(); //create clone of list to move elements of array down
@@ -67,6 +73,18 @@ public class SimpleList {
 				found = true; //set found to true so it only removes one instance of the variable
 			}
 			increment++;
+		}
+		double emptySpaces = list.length - count;
+		if((emptySpaces / list.length) > 0.25) { //if the list has more than 25% empty spaces
+			while((emptySpaces / list.length) > 0.25) { //until the list no longer has more than 25% empty spaces
+				int[] oldList = new int[list.length];
+				oldList = list.clone();
+				list = new int[oldList.length - 1]; //declare new list with desired size
+				for(int newListIncrementer = 0; newListIncrementer < count; newListIncrementer++) {
+					list[newListIncrementer] = oldList[newListIncrementer];
+				}
+				emptySpaces = list.length - count; //update emptySpaces counter
+			}
 		}
 	}
 	
